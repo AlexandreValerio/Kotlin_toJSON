@@ -1,4 +1,4 @@
-#Kotlin_toJSON Readme - Programação Avançada 2020/2021
+# Kotlin_toJSON Readme - Programação Avançada 2020/2021
 
 Kotlin_toJSON is a library where you can insert a kotlin type and get the expected JSON in string. This library stores the elements in memory in order to use them for many other purposes other than serializing, such as searching or other functions. It uses a visitor pattern design, so it is easy to add new funcionalities without changing the core classes.
 
