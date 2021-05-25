@@ -1,11 +1,11 @@
-package project
+package lib
 
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.hasAnnotation
 
-class JsonObject(val key: String? = null, val receivedObj: Any, parent: JsonElement? = null) : JsonElement(receivedObj, parent) {
+class JsonObject(val receivedObj: Any, parent: JsonElement? = null) : JsonElement(receivedObj, parent) {
 
     /** Lista para guardar os elementos filhos deste elemento composto*/
     val children = mutableListOf<JsonElement>()
@@ -22,17 +22,17 @@ class JsonObject(val key: String? = null, val receivedObj: Any, parent: JsonElem
                 if (it.value is String || it.value is Int || it.value is Boolean || it.value == null ||
                     it.value is Enum<*> || it.value is Double)
                  {
-                    val simple = JsonSimple("${it.key}", it.value, this)
+                    val simple = JsonSimple(it.value, this)
                     objectMap["${it.key}"] = simple
                 } else if (it.value is List<*>) {
                     /** caso seja uma lista cria um JsonArray*/
-                    val aux = JsonArray("${it.key}", it.value as List<Any?>, this)
+                    val aux = JsonArray(it.value as List<Any?>, this)
                     aux.addJsonArray()
                     objectMap["${it.key}"] = aux
                 }
                 else{
                     /** caso seja um objeto*/
-                    val aux = JsonObject("${it.key}", it.value!!, this)
+                    val aux = JsonObject(it.value!!, this)
                     /** já está confirmado que não é null*/
                     aux.addJsonObj()
                     objectMap["${it.key}"] = aux
@@ -62,17 +62,17 @@ class JsonObject(val key: String? = null, val receivedObj: Any, parent: JsonElem
                         it.returnType.classifier == Boolean::class || it.call(receivedObj) is Enum<*> ||
                         it.call(receivedObj) == null
                     ) {
-                        val simple = JsonSimple(name, it.call(receivedObj), this)
+                        val simple = JsonSimple(it.call(receivedObj), this)
                         objectMap[name] = simple
                     }
                     else if (it.returnType.classifier == List::class) {
                         /** caso seja uma lista cria um JsonArray*/
-                        val aux = JsonArray(name, it.call(receivedObj) as List<Any?>, this)
+                        val aux = JsonArray(it.call(receivedObj) as List<Any?>, this)
                         aux.addJsonArray()
                         objectMap[name] = aux
                     } else {
                         /** caso seja um objeto*/
-                        val aux = JsonObject(name, it.call(receivedObj)!!, this)
+                        val aux = JsonObject(it.call(receivedObj)!!, this)
                         /** já está confirmado que não é null*/
                         aux.addJsonObj()
                         objectMap[name] = aux
@@ -88,6 +88,7 @@ class JsonObject(val key: String? = null, val receivedObj: Any, parent: JsonElem
     override fun accept(v: Visitor) {
         if(v.visit(this))
         objectMap.forEach(){
+            v.visitObjectKey(it.key, it.value)
             it.value.accept(v)
         }
 

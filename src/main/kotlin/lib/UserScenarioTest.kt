@@ -1,7 +1,4 @@
-package project
-
-import kotlin.reflect.KClass
-import kotlin.reflect.full.declaredMemberProperties
+package lib
 
 
 data class Student(
@@ -25,17 +22,19 @@ enum class StudentType {
 
 fun main(){
 
+    val chicaFriends = mutableListOf<Any?>()
+    chicaFriends.add("Maria")
+    chicaFriends.add("Margarida")
+
+
+    val chica = Student(2,"Francisca", 1423451, chicaFriends, StudentType.Bachelor, null, false)
+
     val friends = mutableListOf<Any?>()
     friends.add("Joao")
     friends.add("Joana")
     friends.add("Mario")
     friends.add(null)
-
-    val chicaFriends = mutableListOf<Any?>()
-    chicaFriends.add("Maria")
-    chicaFriends.add("Margarida")
-
-    val chica = Student(2,"Francisca", 1423451, chicaFriends, StudentType.Bachelor, null, false)
+    //friends.add(chica)
 
     val cristiano = Student( 7, "Cristiano", 6812374, friends, StudentType.Doctoral, null, true, chica)
 
@@ -67,7 +66,8 @@ fun main(){
     //println(jsonGen.searchString())
     /** Pesquisa para determinar qual o value com o determinado key (se existir)*/
     //println(jsonGen.searchKey("number"))
-    println(jsonGen.getAllKeys())
+    ///println(jsonGen.getAllKeys())
+    jsonGen.toJsonVisual()
 
 
 }

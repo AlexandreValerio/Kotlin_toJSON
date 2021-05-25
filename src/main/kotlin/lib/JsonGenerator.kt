@@ -1,6 +1,7 @@
-package project
+package lib
 
-class JsonGenerator(val obj: Any) {
+
+class JsonGenerator(private val obj: Any) {
     private var json: Any? = null
 
     /** Função que vai percorrer todos os elementos, guardá-los em memória. Posteriormente inicia o visitor da
@@ -9,11 +10,12 @@ class JsonGenerator(val obj: Any) {
         val v = Serializing()
         /** Se for uma lista cria um JSON Array */
         if (obj is List<*>) {
-            val a = JsonArray(null, obj as List<Any?>) //vai sem parent, porque é a "raiz"
+            val a = JsonArray(obj as List<Any?>) //vai sem parent, porque é a "raiz"
             a.addJsonArray()
+            //val serialization: String = FileTreeSkeleton().open(a)
             a.accept(v)
             json = a
-            return(v.serialized)
+            return v.serialized //TODO a função tem que retornar o serialized
 
         }
         /** Se for um elemento primitivo não retorna nada */
@@ -23,11 +25,12 @@ class JsonGenerator(val obj: Any) {
 
         /** Se for uma classe ou um map cria um JSON object*/
         else {
-            val o = JsonObject(null, obj)
+            val o = JsonObject(obj)
             o.addJsonObj()
+            //val serialization: String = FileTreeSkeleton().open(o)
             o.accept(v)
             json = o
-            return(v.serialized)
+            return v.serialized
         }
 
     }
@@ -55,6 +58,29 @@ class JsonGenerator(val obj: Any) {
         auxaccept(v)
         if(v.resulfOfSearch.size == 0) return null
         return v.resulfOfSearch
+    }
+
+
+    fun toJsonVisual() {
+        val v = Viewer()
+
+        /** Se for uma lista cria um JSON Array */
+        if (obj is List<*>) {
+            println("Not a valid element")
+        }
+        /** Se for um elemento primitivo não retorna nada */
+        else if(obj is String || obj is Int || obj is Boolean || obj == null || obj is Enum<*> || obj is Double ){
+            println("Not a valid element")
+        }
+
+        /** Se for uma classe ou um map cria um JSON object*/
+        else {
+            val o = JsonObject(obj)
+            o.addJsonObj()
+            v.openViewer(o)
+            json = o
+        }
+
     }
 
     /** Função auxiliar das anteriores, que chama o visitor consoante o respetivo elemento array ou object*/

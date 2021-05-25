@@ -1,10 +1,9 @@
-package project
-
+package lib
 
 /** Esta classe cria uma lista de JsonElements, de modo a guardár os elementos do array em memória
  */
 
-class JsonArray(val key: String? = null, val receivedList: List<Any?>, parent: JsonElement? = null) : JsonElement(receivedList, parent){
+class JsonArray(val receivedList: List<Any?>, parent: JsonElement? = null) : JsonElement(receivedList, parent){
 
     /** Lista para guardar os elementos filhos deste elemento composto*/
     val children = mutableListOf<JsonElement>()
@@ -20,18 +19,18 @@ class JsonArray(val key: String? = null, val receivedList: List<Any?>, parent: J
 
         receivedList.forEach(){
             if(it is String || it is Int || it is Boolean || it == null || it is Enum<*> || it is Double) { 
-                val simple = JsonSimple(null, it, this)
+                val simple = JsonSimple(it, this)
                 auxArray.add(simple)
             }
             else if(it is List<*>){
-                val aux = JsonArray(null, it as List<Any?>, this) /** Vai instanciar a classe, passando a lista e depois chama a função recursivamente */
+                val aux = JsonArray(it as List<Any?>, this) /** Vai instanciar a classe, passando a lista e depois chama a função recursivamente */
                 aux.addJsonArray()
                 auxArray.add(aux)
 
             }
             /** Caso seja um objeto */
             else {
-                val aux = JsonObject(null, it, this)
+                val aux = JsonObject(it, this)
                 aux.addJsonObj()
                 auxArray.add(aux)
             }
@@ -40,7 +39,7 @@ class JsonArray(val key: String? = null, val receivedList: List<Any?>, parent: J
         }
 
     override fun accept(v: Visitor) {
-        v.visit(this)
+        if(v.visit(this))
         auxArray.forEach(){
             it.accept(v)
         }

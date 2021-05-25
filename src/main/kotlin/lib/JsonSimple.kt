@@ -1,6 +1,6 @@
-package project
+package lib
 
-class JsonSimple(val key: String? = null, val receivedValue: Any?, parent: JsonElement? = null) : JsonElement(receivedValue, parent){
+class JsonSimple(val receivedValue: Any?, parent: JsonElement? = null) : JsonElement(receivedValue, parent){
 
 
     override fun accept(v: Visitor) {

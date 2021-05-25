@@ -1,4 +1,4 @@
-package project
+package lib
 
 @Target(AnnotationTarget.PROPERTY)
 annotation class RemoveProperty

@@ -1,5 +1,4 @@
-
-package project
+package lib
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -57,7 +56,7 @@ private val correctJson = """{
     }
 
 
-    private val correctElement = "[2, 7]"
+    private val correctElement = "[7, 2]"
     @Test
     fun testPropertySearch(){
         /** Devolve uma lista com o(s) elemento(s) associados à key pretendida, pelo que o teste é realizado com o toString*/
