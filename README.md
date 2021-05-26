@@ -22,7 +22,7 @@ JsonGenerator has the following functions:
 
 ## Other Classes
 
-JsonArray, JsonObject and JsonSimple are JsonElement types. When any kotlin element is given, it is stored on these classes based on its type. JsonArray for lists, JsonObject for data classes and Maps, and JsonSimple for the primitive types. Serializing and Search and Visitor Interface types, and are used on the visitor pattern design, to introduce new funcionalities in a modular and easy way.
+JsonArray, JsonObject and JsonSimple are JsonElement types. When any kotlin element is given, it is stored on these classes based on its type. JsonArray for lists, JsonObject for data classes and Maps, and JsonSimple for the primitive types. Serializing and `interface`.Search and Visitor Interface types, and are used on the visitor pattern design, to introduce new funcionalities in a modular and easy way.
 
 ## Anotations
 

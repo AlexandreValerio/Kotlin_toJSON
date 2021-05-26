@@ -1,13 +1,14 @@
-import java.awt.GridLayout
-import java.awt.LayoutManager
+package `interface`
 
-class DefaultSetup : FrameSetup {
-    override val title: String
-        get() = "Test"
-    override val layoutManager: LayoutManager
-        get() = GridLayout(2, 1)
-}
 
+import org.eclipse.swt.events.SelectionAdapter
+import org.eclipse.swt.events.SelectionEvent
+
+
+
+
+
+/*
 class Move : Action {
     override val name: String
         get() = "center"
@@ -24,4 +25,4 @@ class Size : Action {
     override fun execute(window: Window) {
         window.setSize(500, 500)
     }
-}
+}*/

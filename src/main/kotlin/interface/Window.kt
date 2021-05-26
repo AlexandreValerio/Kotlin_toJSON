@@ -1,3 +1,5 @@
+/*
+
 import java.awt.*
 import java.util.*
 import javax.swing.JButton
@@ -19,7 +21,7 @@ class Window {
     // 1) eliminar dependencia de DefaultSetup; @Inject
     private val setup: FrameSetup = DefaultSetup()
 
-    // 2) eliminar dependencias das acoes concretas (Center, Size); @InjectAdd
+    // 2) eliminar dependencias das acoes concretas (Center, `interface`.Size); @InjectAdd
     private val actions = mutableListOf<Action>(Move(), Size())
 
     init {
@@ -58,3 +60,4 @@ fun main () {
     val w = Window() // substituir por criacao com injecao
     w.open()
 }
+*/

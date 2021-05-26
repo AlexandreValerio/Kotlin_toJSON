@@ -2,6 +2,8 @@ package `interface`
 
 import lib.*
 import org.eclipse.swt.SWT
+import org.eclipse.swt.events.ModifyEvent
+import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.graphics.Color
@@ -10,7 +12,16 @@ import org.eclipse.swt.widgets.*
 import org.eclipse.swt.graphics.Device
 
 
+interface FrameSetup {
+    val title: String
+    val layoutManager: GridLayout
+}
 
+
+interface Action {
+    val name: String
+    fun execute(window: GUI)
+}
 
 
 data class Dummy(val number: Int)
@@ -18,17 +29,20 @@ data class Dummy(val number: Int)
 class GUI() {
     val shell: Shell
     val tree: Tree
+    private val setup: FrameSetup = DefaultSetup() //TODO Eliminar dependencia do default setup, utilizar o inject
+    //private val actions = mutableListOf<Action>(Search())
 
     init {
         shell = Shell(Display.getDefault())
         shell.setSize(1000, 200)
-        shell.text = "Kotlin_toJSON"
-        shell.layout = GridLayout(2,false)
+        shell.text = setup.title
+        shell.layout = setup.layoutManager
 
 
         tree = Tree(shell, SWT.SINGLE or SWT.BORDER)
         val labelSerialized = Label(shell, SWT.BORDER)
         val searchBox = Text(shell, SWT.BORDER)
+        searchBox.text = "Search here"
 
         tree.addSelectionListener(object : SelectionAdapter() {
             override fun widgetSelected(e: SelectionEvent) {
@@ -55,12 +69,18 @@ class GUI() {
                 }
                 labelSerialized.text = ser
                 labelSerialized.requestLayout()
-
-
             }
         })
 
-        val button = Button(shell, SWT.PUSH)
+
+
+        searchBox.addModifyListener {
+            clearBackgrounds(tree.selection.first())
+            val searched = searchBox.text
+            searchValues(tree.selection.first(), searched)
+        }
+
+/*        val button = Button(shell, SWT.PUSH)
         button.text = "Search"
         button.addSelectionListener(object: SelectionAdapter() {
             override fun widgetSelected(e: SelectionEvent) {
@@ -69,7 +89,7 @@ class GUI() {
                 searchValues(tree.selection.first(), searched)
 
             }
-        })
+        })*/
     }
 
 
