@@ -17,7 +17,7 @@ class DefaultSetup : FrameSetup {
     override val width: Int
         get() = 700
     override val height: Int
-        get() = 450
+        get() = 470
 
     override fun applyIcons(node: TreeItem, display: Display) {
         val objNode = Image(display, "object_icon.png")

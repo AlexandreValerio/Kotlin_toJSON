@@ -22,7 +22,7 @@ enum class StudentType {
 
 fun main(){
 
-    val chicaFriends = mutableListOf<Any?>()
+  val chicaFriends = mutableListOf<Any?>()
     chicaFriends.add("Maria")
     chicaFriends.add("Margarida")
 

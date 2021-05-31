@@ -26,7 +26,7 @@ interface Action {
     val hasTextBox: Boolean
     var tBoxText: String
     fun execute(window: Window)
-    fun undo(window: Window) { }
+
 }
 
 
