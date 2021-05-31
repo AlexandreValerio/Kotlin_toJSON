@@ -86,6 +86,9 @@ val chicaFriends = mutableListOf<Any?>()
     jsonGen.toJsonVisual()
 ```
 
+### Inserting new Frames or new Actions
+
+You can insert new Frames or Actions. For that, you must use based on the examples already done in the Actions.kt and Frames.kt. After that, you must inser the name of these new Actions/Frames in the di.properties file. Note: You have to write the complete name (including the package), for example, "interface.DefaultSetup". 
 
 ### Contributing
 
