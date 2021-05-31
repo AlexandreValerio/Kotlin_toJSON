@@ -1,5 +1,5 @@
 package lib
-import `interface`.GUI
+import `interface`.*
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.*
 
@@ -15,16 +15,18 @@ class Viewer: Visitor {
     lateinit var tree: Tree
 
     override fun openViewer(el: JsonElement){
-        val gui = GUI()
+        //val gui = GUI()
+        val gui = Injector.create(Window::class)
+        gui.initWindow()
         tree = gui.tree
-
         el.accept(this)
+
         gui.open()
     }
 
     override fun visit(o: JsonObject): Boolean {
 
-        var node: TreeItem
+        val node: TreeItem
         if(o.parent == null){
             node = TreeItem(tree, SWT.NONE)
             node.text = "(object)" //TODO
@@ -63,7 +65,7 @@ class Viewer: Visitor {
 
     override fun visit(a: JsonArray): Boolean {
 
-        var node: TreeItem = TreeItem(currentElement, SWT.NONE)
+        val node = TreeItem(currentElement, SWT.NONE)
         node.text = "$arraykey (array)"
         node.data = a
         arraykey = ""
