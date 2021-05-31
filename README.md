@@ -1,7 +1,8 @@
-# Kotlin_toJSON Readme - Programação Avançada 2020/2021
-## 96388 Alexandre Valério Rodrigues
+# Kotlin_toJSON Readme - PA 2020/2021
+## Alexandre Valério Rodrigues
 
 Kotlin_toJSON is a library where you can insert a kotlin type and get the expected JSON in string. This library stores the elements in memory in order to use them for many other purposes other than serializing, such as searching or other functions. It uses a visitor pattern design, so it is easy to add new funcionalities without changing the core classes.
+In the last version a Graphical User Interface was added, using SWT. You can use this library with or without the interface.
 
 ## JsonGenerator
 
@@ -30,11 +31,64 @@ For now, this library has two annotatios:
 - RemoveProperty - if you don't want to have one specific data class property in JSON (like an ID for example);
 - ChangeKey(newKey: String) - use if you want to change a specific key name in a data class
 
-## TestCases and UserScenarioTest
-
-In TestCases you have three tests:
-- testSerialization - it tests the JSON serialization, and checks if it is correct (Note: if add any property annotations in the UserScenarioTest, you will change the outcome of toJson);
-- testStringSearch - it tests the function stringSearch based on the expected answer;
-- testPropertySearch - it tests the function searchKey, and therefore, tests if reflection is being done in a correct manner.
+## Usage
 
 UserScenarioTest is a file with the data class used on tests, and here you can also test annotations and adding lists or any other elements that you want.
+
+```kotlin
+data class Student(
+    val number: Int,
+    val name: String,
+    //@RemoveProperty
+    val ID: Int,
+    val nameOfFriends: MutableList<Any?>,
+    val type: StudentType?,
+    //@ChangeKey("nova chave")
+    val nulidade: String?,
+    val masculino: Boolean,
+
+    val bestFriend: Student? = null,
+)
+
+enum class StudentType {
+    Bachelor, Master, Doctoral
+}
+
+val chicaFriends = mutableListOf<Any?>()
+    chicaFriends.add("Maria")
+    chicaFriends.add("Margarida")
+
+
+    val chica = Student(2,"Francisca", 1423451, chicaFriends, StudentType.Bachelor, null, false)
+
+    val friends = mutableListOf<Any?>()
+    friends.add("Joao")
+    friends.add("Joana")
+    friends.add("Mario")
+    friends.add(null)
+    //friends.add(chica)
+
+    val cristiano = Student( 7, "Cristiano", 6812374, friends, StudentType.Doctoral, null, true, chica)
+
+```
+
+### Lib usage without interface
+```kotlin
+    val jsonGen = JsonGenerator(cristiano)
+    val jsonSerialized = jsonGen.toJson()
+    println(jsonSerialized)
+```
+
+### Lib usage with interface
+```kotlin
+    val jsonGen = JsonGenerator(cristiano)
+    val jsonSerialized = jsonGen.toJson()
+    jsonGen.toJsonVisual()
+```
+
+
+### Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
