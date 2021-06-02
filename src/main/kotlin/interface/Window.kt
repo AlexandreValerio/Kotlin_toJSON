@@ -84,9 +84,9 @@ class Window() {
         })
 
         searchBox.addModifyListener {
-            clearBackgrounds(tree.selection.first())
+            clearBackgrounds(tree.topItem)
             val searched = searchBox.text
-            searchValues(tree.selection.first(), searched)
+            searchValues(tree.topItem, searched)
         }
     }
 

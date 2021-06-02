@@ -15,7 +15,6 @@ class Viewer: Visitor {
     lateinit var tree: Tree
 
     override fun openViewer(el: JsonElement){
-        //val gui = GUI()
         val gui = Injector.create(Window::class)
         gui.initWindow()
         tree = gui.tree

@@ -1,1 +1,10 @@
-null
+{
+	"ID": 1423451,
+	"bestFriend": null,
+	"masculino": false,
+	"name": "Francisca",
+	"nameOfFriends": ["Maria", "Margarida"],
+	"nulidade": null,
+	"number": 2,
+	"type": "Bachelor"
+}
